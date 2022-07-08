@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function ObtenerListado(url) {
+          return new Promise (function(resolve, reject){
+          var request = new XMLHttpRequest();
+          request.open('GET', url);
+          request.responseType = 'json';
+          request.onload=function(){
+         if(request.status== 200){
+             resolve(request.response);
+      
+             }
+               else{
+             reject(Error('No se pudo cargar la imagen' + request.statusText));
+      
+         }
+      
+      }
+      request.onerror=function(){
+         reject(Error('Lo sentimos, ocurrio un error'));
+      }
+      request.send();
+      });
+       }
+      
+      
+      
+      
+      ObtenerListado('https://aabb-181-230-219-190.ngrok.io/student/getAll')
+      .then((response)=>{
+        response.forEach(element => {
+            var body = document.querySelector('tbody'); 
+            var row = body.insertRow()
+            var cell1 = row.insertCell()
+            cell1.innerHTML = element.id
+            
+            var cell2 = row.insertCell()
+            cell2.innerHTML = element.dni
+           
+            var cell3 = row.insertCell()
+            cell3.innerHTML = element.lastName
+            
+            var cell4 = row.insertCell()
+            cell4.innerHTML = element.firstName
+            
+            var cell6 = row.insertCell()
+            cell6.innerHTML = element.cohort
+
+
+
+
+        });
+      
+      })
+      .catch((reason)=> {
+         console.log(Error(reason));
+      })
+    </script>
+    
+</head>
+
+<body>
+        <div class="container my-5 text center">
+            
+            <div class="mt-5">   
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">DNI</th>
+                        <th scope="col">LastName</th>
+                        <th scope="col">FirstName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Cohort</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Addres</th>
+                        <th scope="col">Phone</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </body>
+
+
+    </html>
